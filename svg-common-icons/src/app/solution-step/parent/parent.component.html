@@ -1,0 +1,10 @@
+<p>parent works!</p>
+<ng-container *ngFor="let item of listPages">
+    <ng-container *ngIf="item.type === type">
+        <ng-template  [appPlaceholder]="item.component"
+        [initData]="{'list': list, 'index' : index}"></ng-template>
+    </ng-container>
+    </ng-container>
+   
+    <button (click)="goChild1()"> child1</button>
+    <button (click)="goChild2()"> child2</button>

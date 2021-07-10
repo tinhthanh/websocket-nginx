@@ -1,0 +1,16 @@
+<div style="border: 1px solid yellow;">
+    <p>chil-z works!</p>
+    <div >
+        {{ list[index] | json}}
+    </div>
+    <div *ngFor="let item of list ; let i = index">
+        <div>
+            <input [(ngModel)]="item.userName" />
+            {{item.userName}}
+        </div>
+        <div *ngFor="let k of item.chil ; let j = index" >
+            {{k.phone}}
+        </div>
+    </div>
+    <button (click)="back()">back</button>
+</div>

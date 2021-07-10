@@ -1,0 +1,12 @@
+<div style="border: 1px solid red;">
+    <p>chil-n works!</p>
+    {{ list | json}}
+    <div *ngFor="let item of list ; let i = index">
+        <div>
+            <button (click)="edit(i)">edit</button>{{item.userName}}
+        </div>
+        <div *ngFor="let k of item.chil ; let j = index" >
+            {{k.phone}}
+        </div>
+    </div>
+</div>

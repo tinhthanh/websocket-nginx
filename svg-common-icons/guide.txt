@@ -1,0 +1,8 @@
+npm config set legacy-peer-deps true
+
+
+ng generate library common-icons
+
+npm install svg-to-ts --only=dev
+
+"generate-icons": "svg-to-ts --conversionType constants -s projects/common-icons/icons/**/*.svg -o projects/common-icons/src/lib -f common-icons -p commonIcons -t commonIcon -i CommonIcon"
