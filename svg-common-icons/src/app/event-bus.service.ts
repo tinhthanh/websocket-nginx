@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable, Type} from '@angular/core';
 import {Observable, Subject} from "rxjs";
 import { filter, tap } from 'rxjs/operators';
-
+import { v4 as uuidv4 } from 'uuid';
 @Injectable({
   providedIn: 'root',
 })
@@ -10,16 +10,18 @@ export class EventBusService {
   constructor() {
   }
   pushChange<T extends ActionEvent>(type: Type<any>, value: T): void {
-    if (!this.events.has(type.name)) {
-      this.events.set(type.name, new EventEmitter<T>());
+    console.log(type.prototype.name)
+    if (!this.events.has(type.prototype.name)) {
+      this.events.set(type.prototype.name, new EventEmitter<T>());
     }
-    (this.events.get(type.name) as  EventEmitter<T>).next(value);
+    (this.events.get(type.prototype.name) as  EventEmitter<T>).next(value);
   }
   listenChange<T extends ActionEvent >(name: Type<any>): Observable<T> {
-    if (!this.events.has(name.name)) {
-      this.events.set(name.name, new EventEmitter<T>());
+    console.log(name.prototype.name)
+    if (!this.events.has(name.prototype.name)) {
+      this.events.set(name.prototype.name, new EventEmitter<T>());
     }
- return (this.events.get(name.name) as  Subject<T>).pipe(
+ return (this.events.get(name.prototype.name) as  Subject<T>).pipe(
       tap(k =>{
         console.log(k)
       })
@@ -38,10 +40,10 @@ export class EventBusService {
     }
   }
   deleteEvents<T>(name:  Type<any>): void {
-    if (this.events.has(name.name)) {
-      let subscription = this.events.get(name.name);
+    if (this.events.has(name.prototype.name)) {
+      let subscription = this.events.get(name.prototype.name);
       subscription && typeof subscription.unsubscribe === "function" && subscription.unsubscribe();
-      this.events.delete(name.name);
+      this.events.delete(name.prototype.name);
     }
   }
 }
@@ -53,4 +55,11 @@ export abstract class ActionEvent{
      this.state = state;
    }
    abstract makeSound(input : string) : string;
+}
+export function EventHashKey({
+  hashKey = ""
+} = {}) {
+  return function(constructor: Function) {
+    constructor.prototype.name = hashKey || uuidv4();
+  }
 }

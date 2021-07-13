@@ -1,12 +1,13 @@
 import { Component, Input, OnInit, Output ,EventEmitter} from '@angular/core';
 import { Demo } from 'src/app/app.component';
-import { EventBusService } from 'src/app/event-bus.service';
+import { EventBusService, EventHashKey } from 'src/app/event-bus.service';
 
 @Component({
   selector: 'app-chil-n',
   templateUrl: './chil-n.component.html',
   styleUrls: ['./chil-n.component.scss']
 })
+@EventHashKey()
 export class ChilNComponent implements OnInit {
  @Input() list: any[]  = [];
  @Output() eventBus:EventEmitter<any> = new EventEmitter()
@@ -22,7 +23,7 @@ export class ChilNComponent implements OnInit {
     console.log(i);
     this.eventBusService.pushChange<Demo>(ChilNComponent,new Demo(ChilNComponent.action.EDIT, i))
 
-  
+
   }
 
 }

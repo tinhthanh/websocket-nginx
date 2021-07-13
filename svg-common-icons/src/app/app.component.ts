@@ -18,12 +18,12 @@ export class AppComponent {
     this.webSocketSubscriberService.register( '/dome' , (data) => {
       console.log(data)
     })
-    
+
     this.form = fb.group({
       phone: ['']
     });
     eventBusService.listenChange<Demo>(ChildComponent).pipe(
-      filter( z =>  
+      filter( z =>
         (z instanceof Demo )
       )
     ).subscribe( z => {
@@ -67,7 +67,7 @@ console.log(days4)
           return `Today - ${fn(time.getHours())}:${fn(time.getMinutes())}` ;
       case 1:
           return `Yesterday - ${fn(time.getHours())}:${fn(time.getMinutes())}`
-      case 2 || 3 || 4 || 5 || 6 || 7:    
+      case 2 || 3 || 4 || 5 || 6 || 7:
            return `${type +  1} days ago`
       default:
            return  `${fn(time.getDay())} ${time.toLocaleString("defalt", { month : 'long'})} ${time.getFullYear().toString().substr(-2)}`;
@@ -79,7 +79,7 @@ export class Demo extends ActionEvent{
   makeSound(input: string): string {
     throw new Error('Method not implemented.');
   }
-  action: string; 
+  action: string;
   state: any
   constructor(action: string, state: any) {
     super(action,state);

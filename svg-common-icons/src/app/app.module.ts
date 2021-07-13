@@ -33,9 +33,9 @@ import { StompRService } from '@stomp/ng2-stompjs';
   ],
   providers: [WebSocketSubscriberService, StompRService],
   bootstrap: [AppComponent],
-  entryComponents: [ChilNComponent, ChilZComponent]
+  entryComponents: []
 })
-export class AppModule { 
+export class AppModule {
   constructor(private commonIconService: CommonIconsService) {
     this.commonIconService.registerIcons( [
        commonIconsArtist
