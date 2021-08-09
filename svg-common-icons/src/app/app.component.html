@@ -1,13 +1,17 @@
+
 <div style="width: 50px;">
   <lib-common-icons name="artist"></lib-common-icons>
 </div>
 <app-child></app-child>
 <app-parent></app-parent>
 
-<form [formGroup]="form">
+<form [formGroup]="userFormGroup">
   <div class="form-group">
     <label for="phone-number">Phone Number</label>
-    {{form.value | json}}
-    <input maxlength="12" class="form-control"  type="text" appPhoneMask  formControlName="phone" id="phone-number"  >
+    {{userFormGroup.controls.userName.errors | json}}
+    
+    <input maxlength="12" class="form-control"  type="text"   formControlName="userName" id="phone-number"  >
+      <button (click)="submit()">submit</button>
+    <!-- <input maxlength="12" class="form-control"  type="text" appPhoneMask  formControlName="phone" id="phone-number"  > -->
   </div>
 </form>

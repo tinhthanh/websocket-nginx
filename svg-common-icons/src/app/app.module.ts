@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { PhoneMaskDirective } from './directives/phone-mask.directive';
 import { WebSocketSubscriberService } from './services/web-socket-subscriber.service';
 import { StompRService } from '@stomp/ng2-stompjs';
+import { DynamicFormModule } from './dynamic-form/dynamic-form.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { StompRService } from '@stomp/ng2-stompjs';
     CommonIconsModule,
     FormsModule,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DynamicFormModule
   ],
   providers: [WebSocketSubscriberService, StompRService],
   bootstrap: [AppComponent],

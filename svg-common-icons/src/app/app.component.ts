@@ -5,6 +5,8 @@ import { ChildComponent } from './child/child.component';
 import { commonIconsArtist } from 'projects/common-icons/src/public-api';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { WebSocketSubscriberService } from './services/web-socket-subscriber.service';
+import { User } from './dynamic-form/entitys/user.form';
+import { DynamicFormService } from './dynamic-form/services/dynamic-form.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,16 +14,35 @@ import { WebSocketSubscriberService } from './services/web-socket-subscriber.ser
 })
 export class AppComponent {
   title = 'svg-common-icons';
-  form: FormGroup;
+  userFormGroup: FormGroup;
 
-  constructor(private eventBusService: EventBusService,fb: FormBuilder,private webSocketSubscriberService: WebSocketSubscriberService) {
+  constructor(private dynamicFormService: DynamicFormService, private eventBusService: EventBusService,fb: FormBuilder,private webSocketSubscriberService: WebSocketSubscriberService) {
+    const temp  = {
+      currentExperience : 6,
+      userAddress  : {
+          mobileNo: "1000"
+        },
+      courses:  [
+        {
+        courseName: "DEMO"
+        }
+      ]
+    }
+    let user = new User(temp);
+ 
+    // user.currentExperience = 5; // set as default value.
+    // user.userAddress = new UserAddress(); // create nested object, this will bind as a `FormGroup`.
+    // let course = new Course();
+    // user.courses = new Array<Course>(); // create nested array object, this will bind as a `FormArray`.
+    // user.courses.push(course);
+   this.userFormGroup = this.dynamicFormService.formGroup<User>(user);
+   console.log(this.userFormGroup.getRawValue())
+    console.log(user)
+
     this.webSocketSubscriberService.register( '/dome' , (data) => {
       console.log(data)
     })
 
-    this.form = fb.group({
-      phone: ['']
-    });
     eventBusService.listenChange<Demo>(ChildComponent).pipe(
       filter( z =>
         (z instanceof Demo )
@@ -72,6 +93,11 @@ console.log(days4)
       default:
            return  `${fn(time.getDay())} ${time.toLocaleString("defalt", { month : 'long'})} ${time.getFullYear().toString().substr(-2)}`;
     }
+}
+submit() {
+ 
+  console.log( this.userFormGroup.valid)
+  console.log( this.userFormGroup.getRawValue())
 }
 }
 
